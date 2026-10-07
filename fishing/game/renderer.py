@@ -19,23 +19,70 @@ COLOR_TEXT = (255, 255, 255)
 
 
 def draw_scene(surface, hook, fish_list):
-    surface.fill(COLOR_SKY, pygame.Rect(0, 0, WIDTH, SURFACE_Y))
-    surface.fill(COLOR_WATER, pygame.Rect(0, SURFACE_Y, WIDTH, HEIGHT - SURFACE_Y))
+    # Draw the background first.
+    surface.fill(
+        COLOR_SKY,
+        pygame.Rect(0, 0, WIDTH, SURFACE_Y)
+    )
 
-    pygame.draw.rect(surface, COLOR_BOAT, (hook.x - 40, SURFACE_Y - 20, 80, 22))
+    surface.fill(
+        COLOR_WATER,
+        pygame.Rect(0, SURFACE_Y, WIDTH, HEIGHT - SURFACE_Y)
+    )
 
-    pygame.draw.line(surface, COLOR_LINE, (hook.x, SURFACE_Y), (hook.x, hook.y), 2)
-    pygame.draw.circle(surface, COLOR_HOOK, (int(hook.x), int(hook.y)), 7)
-
+    # Draw all fish independently of the hook.
+    # Fish remain visible while the hook is moving.
     for fish in fish_list:
-        pygame.draw.ellipse(surface, fish.color, fish.get_rect())
+        pygame.draw.ellipse(
+            surface,
+            fish.color,
+            fish.get_rect()
+        )
+
+    # Draw the boat.
+    pygame.draw.rect(
+        surface,
+        COLOR_BOAT,
+        (hook.x - 40, SURFACE_Y - 20, 80, 22)
+    )
+
+    # Draw the fishing line.
+    pygame.draw.line(
+        surface,
+        COLOR_LINE,
+        (hook.x, SURFACE_Y),
+        (hook.x, hook.y),
+        2
+    )
+
+    # Draw the hook.
+    pygame.draw.circle(
+        surface,
+        COLOR_HOOK,
+        (int(hook.x), int(hook.y)),
+        7
+    )
 
 
 def draw_text(surface, font, text, pos, color=COLOR_TEXT):
-    surface.blit(font.render(text, True, color), pos)
+    surface.blit(
+        font.render(text, True, color),
+        pos
+    )
 
 
 def draw_banner(surface, font, text):
-    surf = font.render(text, True, (255, 220, 80))
-    rect = surf.get_rect(center=(surface.get_width() // 2, surface.get_height() // 2))
+    surf = font.render(
+        text,
+        True,
+        (255, 220, 80)
+    )
+
+    rect = surf.get_rect(
+        center=(
+            surface.get_width() // 2,
+            surface.get_height() // 2
+        )
+    )
+
     surface.blit(surf, rect)
